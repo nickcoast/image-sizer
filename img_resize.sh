@@ -52,9 +52,9 @@ do
                 width=$(identify -format "%w" $tempjpg)
                 maxdim=$(($height>$width?$height:$width))
                 echo "Maxdim is $maxdim"
-                if [ $height -ne $width ]; then
-
-                fi
+                #if [ $height -ne $width ]; then
+                #
+                #fi
         fi
         zoombefore=$(stat --printf='%s' $i)
         jpegtran -copy none -optimize -outfile $tempjpg $i
