@@ -23,6 +23,9 @@ if [ $MISSING = true ]; then
 exit;
 fi
 
+#TODO: make this a command line option
+bg='white'
+
 jpg_list=()
 while IFS= read -d $'\0' -r jpg ; do
   jpg_list=("${jpg_list[@]}" "$jpg")
@@ -75,11 +78,11 @@ do
   #       #NO RESIZE FOR ZOOM
   cp $i $zoom
   mkdir -p "product/$dir"
-  convert $i -resize 380x380\> $product
+  convert $i -resize 380x380\> -background $bg -gravity center -extent 380x380 $product
   mkdir -p "catalog/$dir"
-  convert $i -resize 230x230\> $catalog
+  convert $i -resize 230x230\> -background $bg -gravity center -extent 230x230 $catalog
   mkdir -p "thumb/$dir"
-  convert $i -resize 50x50\> $thumb
+  convert $i -resize 50x50\> -background $bg -gravity center -extent 50x50 $thumb
   echo "Dir is '$dir'"
   #echo "Zoom image is '$zoom'"
 done
