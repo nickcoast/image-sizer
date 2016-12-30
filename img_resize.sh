@@ -29,7 +29,7 @@ bg='white'
 jpg_list=()
 while IFS= read -d $'\0' -r jpg ; do
   jpg_list=("${jpg_list[@]}" "$jpg")
-done < <(find * -maxdepth 3 -type f -name "*.jpg" -not -path "zoom/*" -not -path "product/*" -not -path "catalog/*" -not -path "thumb/*" -print0)
+done < <(find * -maxdepth 3 -type f -name "*.jpg" -not -path "zoom/*" -not -path "product/*" -not -path "catalog/*" -not -path "thumb/*" -not -path "thumbs/*" -print0)
 
 # see if any jpegs. maxdepth to look is 3 levels.
 jpgcount=${#jpg_list[@]}
@@ -45,7 +45,7 @@ autocrop=false
 
 for i in "${jpg_list[@]}"
 do
-  echo "$i -> zoom, product, catalog, thumb"
+  echo "$i -> zoom, product, catalog, thumbs"
   thisjpg=$(basename $i)
   dir=$(dirname $i)
   tempjpg=$dir"/asdfjkl."$thisjpg
@@ -73,7 +73,7 @@ do
   zoom='zoom/'$i
   product='product/'$i
   catalog='catalog/'$i
-  thumb='thumb/'$i
+  thumbs='thumbs/'$i
   mkdir -p "zoom/$dir"
   #       #NO RESIZE FOR ZOOM
   cp $i $zoom
@@ -81,8 +81,8 @@ do
   convert $i -resize 380x380\> -background $bg -gravity center -extent 380x380 $product
   mkdir -p "catalog/$dir"
   convert $i -resize 230x230\> -background $bg -gravity center -extent 230x230 $catalog
-  mkdir -p "thumb/$dir"
-  convert $i -resize 50x50\> -background $bg -gravity center -extent 50x50 $thumb
+  mkdir -p "thumbs/$dir"
+  convert $i -resize 50x50\> -background $bg -gravity center -extent 50x50 $thumbs
   echo "Dir is '$dir'"
   #echo "Zoom image is '$zoom'"
 done
